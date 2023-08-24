@@ -1,66 +1,46 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+**Steps to install:**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1. Clone the repository on your local machine:  git clone https://github.com/ciprianNetoiu/sky.git
+2. Make a database and a user for it in MySQL. Fill the .env file with the database credential. Default values are:
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=sky
+   DB_USERNAME=sky
+   DB_PASSWORD=sky2023
 
-## About Laravel
+3. In a terminal, inside the root folder, run the following commands:
+   php artisan migrate
+   php artisan db:seed
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**How to test the application:**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+To start the app just run this command inside the root folder: php artisan serve
+You should get a message like this:  INFO  Server running on [http://127.0.0.1:8000].
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Open Postman or another similar app.
+Make a post request using the base URL you received above. Full URL using the IP I received:
+http://127.0.0.1:8000/api/crossword
+I used a bearer token for authentication. As it was not time to make a mechanism to generate the token, I just hard-coded it. The bearer is: f684dd2a-f72d-4bc4-b24f-445a54f1763b
+As a parameter you can add 'date' equal to a database formatted date (2023-08-24). This parameter is not mandatory.
+If the date in the post request matches one of the already created crosswords, I return the crossword for that day, if not a new one is generated. So if you want a crossword from the past, you only have to make a request with the desired date.
+Send the request, and you should get the desired response.
 
-## Learning Laravel
+**Answers:**
+1. Which infrastructure resources you would need to run the utility daily in an automated fashion?
+   I would use the Laravel Queues system to create a job that runs every night. I could also use a cronjob to do this.
+2. How would you deploy your code to the infrastructure?
+   I use devAzure for deployments. I have a pipeline for my project, and I make a new release from the master branch each time I want to deploy new code.
+3. How would you automate your deployments so that each push to your default branch will trigger a deployment to your production environment?
+   I used to work in a team witch automated the deployment when pushing to server. I don't actually like this idea. We were working with GitHub, and we used GitHub service hooks for this.
+4. Is it possible to get the data about past crosswords? If yes, how would you build a solution to get all the historical crosswords data?
+   It is possible, I already implemented a solution in the project.
+   I have 3 tables in the database:
+    - items - a table where all possible words are kept (in the project, I only have the ones you included in the PDF)
+    - crossword_items -  as a link table where I keep all the words linked to the crossword table
+    - crosswords - is the main table where a new record is created for each day
+   All the historical crosswords are stored in the database, so we can access them whenever we want.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+	
