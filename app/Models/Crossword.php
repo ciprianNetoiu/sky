@@ -18,7 +18,7 @@ class Crossword extends Model
      */
     public function items():HasManyThrough
     {
-        return $this->hasManyThrough(Item::class, CrosswordItem::class);
+        return $this->hasManyThrough(Item::class, CrosswordItem::class, 'crossword_id', 'id', 'id', 'item_id');
     }
 
     public function crosswordItem(): HasMany

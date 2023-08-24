@@ -17,4 +17,10 @@ class Item extends Model
         'date',
         'direction'
     ];
+
+    protected $hidden = [
+      'id',
+      'created_at',
+      'updated_at'
+    ];
 }

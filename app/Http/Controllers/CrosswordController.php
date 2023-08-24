@@ -30,6 +30,6 @@ class CrosswordController extends Controller
                 ];
             }
         }
-        return $crossword->crosswordItem;
+        return $crossword->items;
     }
 }
