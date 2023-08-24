@@ -39,6 +39,7 @@ Send the request, and you should get the desired response.
     - items - a table where all possible words are kept (in the project, I only have the ones you included in the PDF)
     - crossword_items -  as a link table where I keep all the words linked to the crossword table
     - crosswords - is the main table where a new record is created for each day
+   
    All the historical crosswords are stored in the database, so we can access them whenever we want.
 
 
